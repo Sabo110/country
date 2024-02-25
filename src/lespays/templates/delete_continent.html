@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <form method="post">
+        {% csrf_token %}
+        Êtes-vous sûr de vouloir supprimer le continent <h3 class="d-inline"><strong>{{ continent.name }} ?</strong></h3> 
+        <input type="submit" value="Confirmer" class="btn btn-danger">
+        <a href="{% url "home" %}" class="btn btn-success">Annuler</a>
+    </form>
+</div>
+{% endblock content %}

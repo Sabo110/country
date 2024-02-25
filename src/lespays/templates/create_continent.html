@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% if messages %}
+            <div class="alert alert-success" role="alert">
+                {% for message in messages %} {{message}} {% endfor %}
+            </div>
+        {% endif %}
+        {% for field in form %}
+            <div class="groupe-form">
+                <label for="">{{ field.label_tag }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <div class="mt-4">
+            <input type="submit" value="creer" class="btn btn-success w-100"> 
+        </div>
+    </form>
+{% endblock content %}

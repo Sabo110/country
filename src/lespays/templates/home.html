@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <h1>liste des continent</h1>
+        <ul class="list-group bg-primary">
+        
+        </ul>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for continent in liste %}
+                    <tr>
+                        <td>{{ continent.id }}</td>
+                        <td>{{ continent.name }}</td>
+                        <td><a class="btn btn-danger" href="{% url "delete_continent" pk=continent.id %}">supprimer</a> ou <a class="btn btn-success" href="{% url "update_continent" pk=continent.id %}">modifier</a></td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url "create_continent" %}" class="btn btn-success w-100 mt-4">Ajouter un continent</a>
+    </div>
+{% endblock content %}

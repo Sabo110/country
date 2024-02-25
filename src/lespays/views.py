@@ -7,9 +7,11 @@ from .forms import ContinentForm
 # Create your views here.
 def home(request):
     context = {
-        'liste' : Continent.objects.all()
+        'nb_continent' : Continent.objects.all().count(),
+        'nb_pays': Pays.objects.all().count(),
     }
-    return render(request, 'home.html', context)
+    return render(request, 'sidebar.html', context)
+
 
 class ContinentCreateView(CreateView):
     model = Continent

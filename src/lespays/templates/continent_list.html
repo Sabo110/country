@@ -1,0 +1,6 @@
+{% extends "sidebar.html" %}
+
+{% block content %}
+    <h1 class="my-4 text-2xl">Liste des continents</h1>
+    {% include "table.html" with header=header label="continent" %}
+{% endblock content %}

@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1 class="text-2xl mb-4">Modification du continent <strong>{{ object }}</strong> </h1>
-    <form action="" method="post">
+    <form action="" method="post" novalidate>
         {% csrf_token %}
         {% for field in form %}
             <div class="groupe-form">
@@ -10,6 +10,6 @@
                 {{ field }}
             </div>
         {% endfor %}
-        {% include "green_btn.html" with label="Modifier" %}
+        {% include "btn_submit.html" with btn_libele="Modifier" %}
     </form>
 {% endblock content %}

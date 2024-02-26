@@ -3,22 +3,17 @@
 {% block title %}{% endblock title %}
 
 {% block content %}
-    <form action="" method="post">
+    <form action="" method="post" novalidate>
         {% csrf_token %}
-        {% if messages %}
-            <div class="alert alert-success" role="alert">
-                {% for message in messages %} {{message}} {% endfor %}
-            </div>
-        {% endif %}
         {% for field in form %}
             <div class="groupe-form">
                 <label for="">{{ field.label_tag }}</label>
                 {{ field }}
+                {% for error in field.errors %}
+                    <small class="text-red-800"> {{ error }} </small>
+                {% endfor %}
             </div>
         {% endfor %}
-        <div class="mt-4">
-            <input type="submit" value="creer" class="btn btn-success w-100"> 
-        </div>
-        {% include "btn_submit.html" %}
+        {% include "btn_submit.html" with btn_libele="Creer" %}
     </form>
 {% endblock content %}

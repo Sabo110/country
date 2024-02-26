@@ -1,17 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.views.generic import UpdateView, DeleteView, CreateView, ListView
+from django.views.generic import UpdateView, CreateView, ListView
 from django.urls import reverse_lazy
 from .models import *
-from .forms import ContinentForm
+from .forms import ContinentForm, PaysForm
 # Create your views here.
 
 def home(request):
-    context = {
-        'nb_continent' : Continent.objects.all().count(),
-        'nb_pays': Pays.objects.all().count(),
-    }
-    return render(request, 'sidebar.html', context)
+    return render(request, 'home.html')
 
 class ContinentListView(ListView):
     model = Continent
@@ -35,50 +31,9 @@ class ContinentCreateView(CreateView):
     template_name = 'create_continent.html'
     success_url = reverse_lazy('continent_list')
 
-def deleteContinent(request, id):
-    try:
-        cont = Continent.objects.get(id=id)
-        cont.delete()
-        messages.success(request, 'Continent supprimé!')
-    except Continent.DoesNotExist:
-        messages.error(request, "Ce continent a déjà été supprimé!")
-    finally:
-        return redirect('continent_list')
-
-def updateContinent(request, id):
-    try:
-        cont = Continent.objects.get(id=id)
-        if request.method == 'POST':
-            form = ContinentForm(request.POST, instance=cont)
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Continent modifié!')
-                return redirect('continent_list')
-    except Continent.DoesNotExist:
-        messages.error(request, "Continent introuvale!")
-
-def deleteCountry(request, id):
-    try:
-        pays = Pays.objects.get(id=id)
-        pays.delete()
-        messages.success(request, 'Pays supprimé!')
-    except Continent.DoesNotExist:
-        messages.error(request, "Pays introuvale!")
-    finally:
-        return redirect('continent_list')
-       
-class PaysListView(ListView):
-    model = Pays
-    template_name = "pays_list.html"
-    paginate_by = 1
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["header"] = ['id', 'name', 'devise', 'continent']
-        #on definit l'url pour la suppression d'un pays
-        context["url_sup"] = 'suppays'
-        return context
-
+    def form_valid(self, form):
+        messages.success(self.request, "Création réalisée avec succès!")
+        return super().form_valid(form)
 
 
 class ContinentUpdateView(UpdateView):
@@ -87,9 +42,68 @@ class ContinentUpdateView(UpdateView):
     template_name = 'update_continent.html'
     success_url = reverse_lazy('continent_list')
 
-class ContinentDeleteView(DeleteView):
-    model = Continent
-    template_name = 'delete_continent.html'
-    success_url = reverse_lazy('home')
+    def form_valid(self, form):
+        messages.success(self.request, "Modification réalisée avec succès!")
+        return super().form_valid(form)
+
+
+def deleteContinent(request, id):
+    try:
+        cont = Continent.objects.get(id=id)
+        cont.delete()
+        messages.success(request, 'Suppression réalisée avec succès!')
+    except Continent.DoesNotExist:
+        messages.error(request, "Ce continent a déjà été supprimé!")
+    finally:
+        return redirect('continent_list')
+       
+class PaysListView(ListView):
+    model = Pays
+    template_name = "pays_list.html"
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["header"] = ['id', 'name', 'devise', 'continent']
+        #on definit l'url pour la suppression d'un pays
+        context["url_sup"] = 'suppays'
+        context["url_modif"] = 'update_pays'
+        #on definit l'url pour la creation d'un continent
+        context["url_create"] = 'create_pays'
+        return context
+
+class PaysCreateView(CreateView):
+    model = Pays
+    template_name = 'create_pays.html'
+    form_class = PaysForm
+    success_url = reverse_lazy('pays_list')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Création réalisée avec succès!")
+        return super().form_valid(form)
+
+class PaysUpdateView(UpdateView):
+    model = Pays
+    template_name = 'update_pays.html'
+    form_class = PaysForm
+    success_url = reverse_lazy('pays_list')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Modification réalisée avec succès!")
+        return super().form_valid(form)
+
+def deletePays(request, id):
+    try:
+        pays = Pays.objects.get(id=id)
+        pays.delete()
+        messages.success(request, 'Suppression réalisée avec succès!')
+    except Continent.DoesNotExist:
+        messages.error(request, "Ce pays a déjà été supprimé!")
+    finally:
+        return redirect('pays_list')
+
+
+
+
 
 

@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Continent(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, null=False, blank=False)
 
     def __str__(self):
         return self.name
@@ -12,11 +12,11 @@ class Continent(models.Model):
     
 
 class Pays(models.Model):
-    name = models.CharField(max_length=50)
-    superficie = models.DecimalField(max_digits=5, decimal_places=2)
-    population = models.IntegerField()
+    name = models.CharField(max_length=50, null=False, blank=False)
+    superficie = models.FloatField(null=False, blank=False)
+    population = models.IntegerField(null=False, blank=False)
     devise = models.CharField(max_length=50)
-    continent = models.ForeignKey(Continent, on_delete=models.DO_NOTHING, related_name='pays')
+    continent = models.ForeignKey(Continent, on_delete=models.DO_NOTHING, related_name='pays', null=True)
     
 
 

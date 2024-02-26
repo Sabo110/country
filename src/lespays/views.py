@@ -12,7 +12,7 @@ def home(request):
 class ContinentListView(ListView):
     model = Continent
     template_name = "continent_list.html"
-    paginate_by = 10
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -60,7 +60,7 @@ def deleteContinent(request, id):
 class PaysListView(ListView):
     model = Pays
     template_name = "pays_list.html"
-    paginate_by = 10
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

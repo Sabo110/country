@@ -16,7 +16,7 @@ class Pays(models.Model):
     superficie = models.FloatField(null=False, blank=False)
     population = models.IntegerField(null=False, blank=False)
     devise = models.CharField(max_length=50)
-    continent = models.ForeignKey(Continent, on_delete=models.DO_NOTHING, related_name='pays', null=True)
+    continent = models.ForeignKey(Continent, on_delete=models.CASCADE, related_name='pays')
 
     def __str__(self):
         return self.name

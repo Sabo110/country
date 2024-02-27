@@ -16,3 +16,7 @@ def nb_continent():
 @register.simple_tag
 def nb_pays():
     return Pays.objects.all().count()
+
+@register.simple_tag
+def get_class_name(instance):
+    return instance.__class__.__name__

@@ -1,9 +1,10 @@
+{% load mes_tags %}
 <!-- Modal toggle -->
-<button data-modal-target="authentication-modal{{obj.id}}" data-modal-toggle="authentication-modal{{obj.id}}" class="mt-4 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800" type="submit">
+<button data-modal-target="authentication-modal{{obj.id}}" data-modal-toggle="authentication-modal{{obj.id}}" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
     <span class="relative px-5 py-1.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-      Détail
+    Détail
     </span>
-</button>
+    </button>
 
 <!-- Main modal -->
 <div id="authentication-modal{{obj.id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -25,17 +26,26 @@
             <!-- Modal body -->
             <div class="p-4 md:p-5">
                 <ul class="flex flex-col gap-y-4">
-                    <li class="text-xl">Nom du continent: <strong> {{ obj.name }} </strong></li>
-                    <li class="text-xl">Nombre de pays: <strong> {{ obj.pays.all.count }} </strong>
-                        {% if obj.pays.all %}
-                            <h1>Liste de pays:</h1>
-                            <ul class="text-lg">
-                                {% for pay in obj.pays.all %}
-                                    <li class="ps-4">-{{ pay }} </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </li>
+                    {% get_class_name obj as class_name %}
+                    {% if class_name == "Continent" %}
+                        <li class="text-xl">Nom du continent: <strong> {{ obj.name }} </strong></li>
+                        <li class="text-xl">Nombre de pays: <strong> {{ obj.pays.all.count }} </strong>
+                            {% if obj.pays.all %}
+                                <h1>Liste de pays:</h1>
+                                <ul class="text-lg">
+                                    {% for pay in obj.pays.all %}
+                                        <li class="ps-4">-{{ pay }} </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% elif class_name == "Pays" %}
+                        <li class="text-xl">Nom du pays: <strong>{{ obj.name }}</strong> </li>
+                        <li class="text-xl">Population: <strong>{{ obj.population }}</strong></li>
+                        <li class="text-xl">Superficie: <strong>{{ obj.superficie }} m2</strong></li>
+                        <li class="text-xl">Devise: <strong>{{ obj.devise }}</strong></li>
+                        <li class="text-xl">Pays du continent: <strong>{{ obj.continent }}</strong></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
